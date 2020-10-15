@@ -1,0 +1,11 @@
+FROM java:8-jre
+
+ARG zk_home=/opt/zookeeper
+ARG zk_version=3.5.8
+
+ENV ZK_HOME=${zk_home} \
+	ZK_VERSION=3.5.8
+
+RUN wget http://archive.apache.org/dist/zookeeper/zookeeper-${zk_version}/apache-zookeeper-${zk_version}-bin.tar.gz \
+ && tar -xzf apache-zookeeper-${zk_version}-bin.tar.gz \
+ && mv apache-zookeeper-${zk_version}-bin ${zk_home}

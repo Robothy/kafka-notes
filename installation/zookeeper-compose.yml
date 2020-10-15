@@ -1,0 +1,45 @@
+version: "3.8"
+services:
+  zk_node1:
+    container_name: zk-node1
+    build:
+      context: .
+      dockerfile: Dockerfile-ZooKeeper
+    image: zk:pkg
+    networks:
+      zk_net:
+        aliases:
+          - zk_node1
+          - zookeeper_node1
+        ipv4_address: 1.0.6.2
+        
+    command: sleep 10d
+  
+  zk_node2:
+    container_name: zk_node2
+    image: zk:pkg
+    networks:
+      zk_net:
+        aliases:
+          - zk_node2
+          - zookeeper_node2
+        ipv4_address: 1.0.6.3
+    command: sleep 10d
+    
+  zk_node3:
+    container_name: zk_node3
+    image: zk:pkg
+    networks:
+      zk_net:
+        aliases:
+          - zk_node3
+          - zookeeper_node3
+        ipv4_address: 1.0.6.4
+    command: sleep 10d
+    
+    
+networks:
+  zk_net:
+    ipam:
+      config:
+        - subnet: "1.0.6.0/24"
