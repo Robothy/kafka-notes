@@ -127,20 +127,55 @@ zookeeper.connection.timeout.ms=18000
 group.initial.rebalance.delay.ms=0
 ```
 
-重要参数说明
+需要修改的参数是 `broker.id` 和 `zookeeper.connect`。
 
-|  |  |
-|---|---|
-| broker.id | broker 的标识符，应该在整个 Kafka 集群中唯一。默认值为0，可以设置为任意整数。 |
-| port |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
-|  |  |
++ `broker.id` 用于标识 Kafka 集群中机器节点的 ID，它在整个集群中必须唯一。
++ `zookeeper.connect` 用于指明提供服务的 ZooKeeper 连接字符串。格式为： `hostname1:port1,hostname2:port2,hostname3:port3`。
+同时，由于 ZooKeeper 集群一般不仅仅为当前的 Kafka 集群提供服务，它还又可能为其它应用提供服务，所以这里最好带上 chroot path, 格式为： `hostname1:port1,hostname2:port2,hostname3:port3/chroot/path`。
 
 [更多 Broker 配置的说明](https://kafka.apache.org/documentation/#brokerconfigs)。
+
+### 启动
+
+Kafka 包提供了启动脚本 `$KAFKA_HOME/bin/kafka-server-start.sh`，启动命令为：
+```
+# $KAFKA_HOME/bin/kafka-server-start.sh -daemon $KAFKA_HOME/config/server.properties
+```
+
+可以通过查看日志来查看启动状态 `$KAFKA_HOME/logs/kafkaServer.out`。
+```
+# tail -n 20 $KAFKA_HOME/logs/kafkaServer.out
+```
+
+### 验证
+
+启动成功之后，可以通过 Kafka 包提供的命令行客户端工具创建话题，生产消息，消费消息。
+
+创建话题
+```
+# $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper zk_node1:2181/kafka --replication-factor 1 --partitions 1 --topic test
+```
+
+查看话题
+```
+# $KAFKA_HOME/bin/kafka-topics.sh --zookeeper zk_node3:2181/kafka --list
+```
+
+生产消息
+```
+# $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list kafka_node1:9092 --topic test
+>Hello
+>Kafka
+>
+```
+
+消费消息
+```
+# $KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server kafka_node1:9092 --topic test --from-beginning
+Hello
+Kafka
+```
+
 
 ## 参考
 
