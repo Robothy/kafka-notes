@@ -30,18 +30,20 @@ clientPort=2181
 
 参数说明：
 
-|---|---|
-|tickTime| 表示 ZooKeeper 中最小时间单元长度，很多运行时间间隔都是使用整数倍的 tickTime 来表示。单位为毫秒，默认值为 3000 |
-|initLimit| 表示 Leader 服务器等待 Follower 服务器启动并完成数据同步的时间。 Follower 服务器启动过程中会与 Leader 建立连接并完成数据同步，从而确定对外提供服务的初始状态。默认值为 10，表示 tickTime 的 10 倍。 |
-|syncLimit| 表示 Leader 服务器与 Follower 服务器之间进行心跳检测的最大延时时间。若 Leader 在 syncLimit 时间内无法获得 Follower 的心跳检测响应， Leader 会认为 Follower 脱离了和自己的同步。默认值为 5, 表示 tickTime 的 10 倍。 |
-|dataDir| 表示 ZooKeeper 服务器存储快照文件的目录。若没有配置 dataLogDir，那么事务日志也会存储在这个目录中。 |
-|clientPort| 表示当前服务器对外提供服务的端口，客户端通过该端口与 ZooKeeper 服务器创建连接。值一般设置为 2181。 ZooKeeper 集群中，不同机器的 `clientPort` 可以不一样。 |
+
+| | |
+| ---  | --- |
+| tickTime | 表示 ZooKeeper 中最小时间单元长度，很多运行时间间隔都是使用整数倍的 tickTime 来表示。单位为毫秒，默认值为 3000 |
+| initLimit | 表示 Leader 服务器等待 Follower 服务器启动并完成数据同步的时间。 Follower 服务器启动过程中会与 Leader 建立连接并完成数据同步，从而确定对外提供服务的初始状态。默认值为 10，表示 tickTime 的 10 倍。 |
+| syncLimit | 表示 Leader 服务器与 Follower 服务器之间进行心跳检测的最大延时时间。若 Leader 在 syncLimit 时间内无法获得 Follower 的心跳检测响应， Leader 会认为 Follower 脱离了和自己的同步。默认值为 5, 表示 tickTime 的 10 倍。  |
+| dataDir | 表示 ZooKeeper 服务器存储快照文件的目录。若没有配置 dataLogDir，那么事务日志也会存储在这个目录中。 |
+|clientPort| 表示当前服务器对外提供服务的端口，客户端通过该端口与 ZooKeeper 服务器创建连接。值一般设置为 2181。 ZooKeeper 集群中，不同机器的 `clientPort` 可以不一样。 | |
 
 ### 启动
 
 可以通过 bin 目录下的脚本启动 ZooKeeper。
 
-```
+```bash
 # $ZK_HOME/bin/zkServer.sh start
 ZooKeeper JMX enabled by default
 Using config: /opt/zookeeper/bin/../conf/zoo.cfg
@@ -80,7 +82,7 @@ Connection closed by foreign host.
 
 集群模式同样可以复用 zoo_sample.cfg, 不过需要添加集群中机器的信息。 配置内容最终如下所示(集群中有3台机器)：
 
-```
+```bash
 tickTime=2000
 initLimit=10
 syncLimit=5
@@ -104,7 +106,6 @@ myid 中的内容为 ZooKeeper 集群中节点的标识。
 在每一台机器上执行如下命令：
 ```
 # $ZK_HOME/bin/zkServer.sh start
-
 ```
 
 #### 验证

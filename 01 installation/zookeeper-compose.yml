@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   zk_node1:
-    container_name: zk-node1
+    container_name: zk_node1
     build:
       context: .
       dockerfile: Dockerfile-ZooKeeper
