@@ -153,17 +153,17 @@ Kafka 包提供了启动脚本 `$KAFKA_HOME/bin/kafka-server-start.sh`，启动�
 
 创建话题
 ```
-# $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper zk_node1:2181/kafka --replication-factor 1 --partitions 1 --topic test
+# $KAFKA_HOME/bin/kafka-topics.sh --create --bootstrap-server kafka:9092 --replication-factor 1 --partitions 1 --topic test
 ```
 
 查看话题
 ```
-# $KAFKA_HOME/bin/kafka-topics.sh --zookeeper zk_node3:2181/kafka --list
+# $KAFKA_HOME/bin/kafka-topics.sh --bootstrap-server kafka:9092 --list
 ```
 
 生产消息
 ```
-# $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list kafka_node1:9092 --topic test
+# $KAFKA_HOME/bin/kafka-console-producer.sh --broker-list kafka:9092 --topic test
 >Hello
 >Kafka
 >
@@ -171,7 +171,7 @@ Kafka 包提供了启动脚本 `$KAFKA_HOME/bin/kafka-server-start.sh`，启动�
 
 消费消息
 ```
-# $KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server kafka_node1:9092 --topic test --from-beginning
+# $KAFKA_HOME/bin/kafka-console-consumer.sh --bootstrap-server kafka:9092 --topic test --from-beginning
 Hello
 Kafka
 ```
